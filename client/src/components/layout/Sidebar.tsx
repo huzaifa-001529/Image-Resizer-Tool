@@ -31,17 +31,17 @@ export const Sidebar = ({ onItemClick, className }: SidebarProps) => {
   };
 
   return (
-    <aside className={cn("w-full md:w-64 bg-sidebar border-r border-border flex flex-col h-full", className)}>
-      <div className="p-6 flex items-center justify-between md:hidden border-b border-sidebar-border">
+    <aside className={cn("w-full md:w-64 bg-sidebar text-sidebar-foreground border-r border-border flex flex-col h-full", className)}>
+      <div className="p-4 flex items-center gap-4 md:hidden border-b border-sidebar-border h-[73px]">
+        <Button variant="ghost" size="icon" onClick={onItemClick} className="text-sidebar-foreground hover:text-primary hover:bg-sidebar-accent">
+          <X className="h-5 w-5" />
+        </Button>
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
             <Layers className="text-white w-5 h-5" />
           </div>
           <span className="font-bold text-lg">PixelForge Pro</span>
         </div>
-        <Button variant="ghost" size="icon" onClick={onItemClick}>
-          <X className="h-5 w-5" />
-        </Button>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
