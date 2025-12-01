@@ -13,9 +13,10 @@ import { Button } from '@/components/ui/button';
 
 interface SidebarProps {
   onItemClick?: () => void;
+  className?: string;
 }
 
-export const Sidebar = ({ onItemClick }: SidebarProps) => {
+export const Sidebar = ({ onItemClick, className }: SidebarProps) => {
   const [location, setLocation] = useLocation();
   const { currentTool, setTool } = useImageStore();
 
@@ -30,7 +31,7 @@ export const Sidebar = ({ onItemClick }: SidebarProps) => {
   };
 
   return (
-    <aside className="w-full md:w-64 bg-sidebar border-r border-border flex flex-col h-full">
+    <aside className={cn("w-full md:w-64 bg-sidebar border-r border-border flex flex-col h-full", className)}>
       <div className="p-6 flex items-center gap-2 md:hidden border-b border-sidebar-border">
         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
           <Layers className="text-white w-5 h-5" />
