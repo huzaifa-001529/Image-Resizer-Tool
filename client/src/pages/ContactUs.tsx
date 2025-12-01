@@ -9,7 +9,7 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 
 const ContactUs = () => {
   return (
-    <LayoutWrapper showSidebar={false}>
+    <LayoutWrapper>
       <div className="max-w-5xl mx-auto py-12 animate-in fade-in duration-500">
         <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">Contact Us</h1>
         

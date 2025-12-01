@@ -5,7 +5,7 @@ import { Layers, Users, Zap, Globe } from 'lucide-react';
 
 const About = () => {
   return (
-    <LayoutWrapper showSidebar={false}>
+    <LayoutWrapper>
       <div className="max-w-4xl mx-auto py-12 animate-in fade-in duration-500">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">About PixelForge Pro</h1>
