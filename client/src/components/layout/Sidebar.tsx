@@ -11,13 +11,22 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from '@/components/ui/button';
 
-export const Sidebar = () => {
+interface SidebarProps {
+  onItemClick?: () => void;
+}
+
+export const Sidebar = ({ onItemClick }: SidebarProps) => {
   const [location, setLocation] = useLocation();
   const { currentTool, setTool } = useImageStore();
 
   const handleToolClick = (toolId: string) => {
     setTool(toolId);
     if (location !== '/') setLocation('/');
+    onItemClick?.();
+  };
+
+  const handleLinkClick = () => {
+    onItemClick?.();
   };
 
   return (
@@ -64,19 +73,19 @@ export const Sidebar = () => {
           <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-2">Menu</h3>
           <div className="space-y-1">
             <Link href="/">
-               <a className={cn("flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors", location === '/' ? "bg-sidebar-accent text-sidebar-accent-foreground" : "text-sidebar-foreground hover:bg-sidebar-accent/50")}>
+               <a onClick={handleLinkClick} className={cn("flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors", location === '/' ? "bg-sidebar-accent text-sidebar-accent-foreground" : "text-sidebar-foreground hover:bg-sidebar-accent/50")}>
                   <Home size={18} />
                   <span>Home</span>
                </a>
             </Link>
             <Link href="/about">
-               <a className={cn("flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors", location === '/about' ? "bg-sidebar-accent text-sidebar-accent-foreground" : "text-sidebar-foreground hover:bg-sidebar-accent/50")}>
+               <a onClick={handleLinkClick} className={cn("flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors", location === '/about' ? "bg-sidebar-accent text-sidebar-accent-foreground" : "text-sidebar-foreground hover:bg-sidebar-accent/50")}>
                   <Info size={18} />
                   <span>About</span>
                </a>
             </Link>
             <Link href="/contact">
-               <a className={cn("flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors", location === '/contact' ? "bg-sidebar-accent text-sidebar-accent-foreground" : "text-sidebar-foreground hover:bg-sidebar-accent/50")}>
+               <a onClick={handleLinkClick} className={cn("flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors", location === '/contact' ? "bg-sidebar-accent text-sidebar-accent-foreground" : "text-sidebar-foreground hover:bg-sidebar-accent/50")}>
                   <Mail size={18} />
                   <span>Contact</span>
                </a>
@@ -89,13 +98,13 @@ export const Sidebar = () => {
            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-2">Legal</h3>
            <div className="space-y-1">
              <Link href="/privacy">
-                <a className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
+                <a onClick={handleLinkClick} className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
                    <Shield size={18} />
                    <span>Privacy Policy</span>
                 </a>
              </Link>
              <Link href="/terms">
-                <a className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
+                <a onClick={handleLinkClick} className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
                    <BookOpen size={18} />
                    <span>Terms of Service</span>
                 </a>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Layers, Sparkles, Menu, Github, ChevronDown, FileType, Crop, Minimize2, Image, BookOpen, Shield, Mail, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -23,6 +23,7 @@ import { cn } from '@/lib/utils';
 export const Header = () => {
   const { setTool } = useImageStore();
   const [location, setLocation] = useLocation();
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const handleToolClick = (toolId: string) => {
     setTool(toolId);
@@ -30,17 +31,22 @@ export const Header = () => {
   };
 
   return (
-    <header className="h-[73px] border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full animate-shimmer">
-      <div className="container mx-auto px-4 h-full flex items-center justify-between">
+    <header className="h-[73px] border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full">
+      {/* Shimmer Effect Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-primary/5 to-transparent animate-[shimmer_3s_infinite]" />
+      </div>
+
+      <div className="container mx-auto px-4 h-full flex items-center justify-between relative z-10">
         <div className="flex items-center gap-4">
-          <Sheet>
+          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="p-0 w-72">
-              <Sidebar />
+              <Sidebar onItemClick={() => setIsSheetOpen(false)} />
             </SheetContent>
           </Sheet>
           
@@ -69,7 +75,7 @@ export const Header = () => {
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
                           <a
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/50 to-secondary/50 p-6 no-underline outline-none focus:shadow-md"
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/50 to-secondary/50 p-6 no-underline outline-none focus:shadow-md hover:scale-[1.02] transition-transform"
                             href="/"
                             onClick={() => handleToolClick('format')}
                           >
