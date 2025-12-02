@@ -6,8 +6,7 @@
   "scripts": {
     "start": "tsx server/index.ts",
     "dev:client": "vite dev --port 5000",
-    "build": "npm run clean && tsx script/build.ts",
-    "clean": "rm -rf node_modules/.vite dist",
+    "build": "tsx script/build.ts",
     "check": "tsc",
     "db:push": "drizzle-kit push"
   },
