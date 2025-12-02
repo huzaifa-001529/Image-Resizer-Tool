@@ -1,7 +1,7 @@
 import React from 'react';
 import { useImageStore } from '@/store/useImageStore';
 import { Button } from '@/components/ui/button';
-import { Download, Share2, Cloud } from 'lucide-react';
+import { Download } from 'lucide-react';
 
 export const DownloadPanel = () => {
   const { selectedImageId, images } = useImageStore();
@@ -27,12 +27,6 @@ export const DownloadPanel = () => {
         </div>
         
         <div className="flex gap-3 w-full md:w-auto">
-          <Button variant="outline" className="flex-1 md:flex-none">
-            <Share2 className="w-4 h-4 mr-2" /> Share
-          </Button>
-          <Button variant="outline" className="flex-1 md:flex-none">
-            <Cloud className="w-4 h-4 mr-2" /> Save to Cloud
-          </Button>
           <Button onClick={handleDownload} className="flex-1 md:flex-none bg-green-600 hover:bg-green-700 text-white">
             <Download className="w-4 h-4 mr-2" /> Download
           </Button>

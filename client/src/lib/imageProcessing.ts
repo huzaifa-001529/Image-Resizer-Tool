@@ -18,7 +18,7 @@ export const processImage = async (
     img.src = imageUrl;
     img.onload = () => {
       const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
       
       if (!ctx) {
         reject(new Error('Could not get canvas context'));
@@ -39,18 +39,49 @@ export const processImage = async (
       canvas.width = width;
       canvas.height = height;
 
+      // For JPEG format, fill with white background to handle transparency
+      const targetFormat = options.format || 'image/jpeg';
+      if (targetFormat === 'image/jpeg') {
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, width, height);
+      }
+
       // Apply filters
       const filters = [];
       if (options.grayscale) filters.push('grayscale(100%)');
       if (options.sepia) filters.push('sepia(100%)');
       if (options.blur) filters.push(`blur(${options.blur}px)`);
       
-      ctx.filter = filters.join(' ');
+      if (filters.length > 0) {
+        ctx.filter = filters.join(' ');
+      }
 
       ctx.drawImage(img, 0, 0, width, height);
 
-      resolve(canvas.toDataURL(options.format || 'image/jpeg', options.quality || 0.9));
+      // Reset filter for potential future operations
+      ctx.filter = 'none';
+
+      // Use appropriate quality based on format
+      let quality = options.quality || 0.9;
+      
+      // PNG ignores quality parameter, but we'll still pass it
+      // WEBP and JPEG use quality
+      try {
+        const dataUrl = canvas.toDataURL(targetFormat, quality);
+        
+        // Verify the conversion worked
+        if (!dataUrl || dataUrl === 'data:,') {
+          reject(new Error('Failed to convert image to ' + targetFormat));
+          return;
+        }
+        
+        resolve(dataUrl);
+      } catch (error) {
+        reject(new Error('Error converting image: ' + (error as Error).message));
+      }
     };
-    img.onerror = (err) => reject(err);
+    img.onerror = (err) => {
+      reject(new Error('Failed to load image: ' + err));
+    };
   });
 };

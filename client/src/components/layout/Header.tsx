@@ -28,6 +28,17 @@ export const Header = () => {
   const handleToolClick = (toolId: string) => {
     setTool(toolId);
     if (location !== '/') setLocation('/');
+    
+    // Show popup message
+    alert('Please upload the image here');
+    
+    // Scroll to image uploader section
+    setTimeout(() => {
+      const uploaderElement = document.getElementById('image-uploader-section');
+      if (uploaderElement) {
+        uploaderElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 500);
   };
 
   return (
@@ -138,14 +149,24 @@ export const Header = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button variant="outline" size="sm" className="hidden sm:flex gap-2 border-primary/20 hover:bg-primary/10 hover:text-primary">
+          <div className="hidden md:flex items-center gap-2">
+            <input 
+              type="email" 
+              placeholder="Enter your email" 
+              className="px-3 py-2 text-sm border border-input rounded-md bg-background w-48"
+            />
+            <Button size="sm" className="bg-primary text-white hover:bg-primary/90 transition-colors">
+              Subscribe
+            </Button>
+          </div>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="hidden sm:flex gap-2 border-primary/20 hover:bg-primary/10 hover:text-primary"
+            onClick={() => window.open('https://github.com/huzaifa-001529', '_blank')}
+          >
             <Github className="w-4 h-4" />
             <span className="hidden lg:inline">Star on GitHub</span>
-          </Button>
-          <Button size="sm" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity shadow-lg shadow-primary/20">
-            <Sparkles className="w-4 h-4 mr-2" />
-            <span className="hidden sm:inline">Go Pro</span>
-            <span className="sm:hidden">Pro</span>
           </Button>
         </div>
       </div>

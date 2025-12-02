@@ -8,14 +8,24 @@ import { DownloadPanel } from '@/components/common/DownloadPanel';
 import { useImageStore } from '@/store/useImageStore';
 
 const Home = () => {
-  const { images, selectedImageId } = useImageStore();
+  const { images, selectedImageId, currentTool } = useImageStore();
+
+  const getToolTitle = () => {
+    switch (currentTool) {
+      case 'format': return 'Image Formatter';
+      case 'resize': return 'Image Resizer';
+      case 'compress': return 'Image Compressor';
+      case 'filters': return 'Filters & Effects';
+      default: return 'Image Processing Tools';
+    }
+  };
 
   return (
     <LayoutWrapper>
       <div className="space-y-8 animate-in fade-in duration-700">
         <div className="text-center space-y-4 mb-12">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent animate-gradient">
-            Professional Image Processing
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent animate-gradient mb-6">
+            {getToolTitle()}
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Secure, fast, and free client-side tools. Convert, resize, and optimize your images without uploading to a server.
@@ -26,7 +36,9 @@ const Home = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
-            <ImageUploader />
+            <div id="image-uploader-section">
+              <ImageUploader />
+            </div>
             <ImageGallery />
             <DownloadPanel />
           </div>

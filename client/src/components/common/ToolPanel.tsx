@@ -140,8 +140,21 @@ export const ToolPanel = () => {
     }
   };
 
+  const getToolTitle = () => {
+    switch (currentTool) {
+      case 'format': return 'Image Formatter';
+      case 'resize': return 'Image Resizer';
+      case 'compress': return 'Image Compressor';
+      case 'filters': return 'Filters & Effects';
+      default: return 'Image Tool';
+    }
+  };
+
   return (
     <div className="bg-card border border-border rounded-xl p-6 shadow-lg animate-in slide-in-from-right-4 duration-500">
+      <div className="mb-6 pb-4 border-b border-border">
+        <h2 className="text-2xl font-bold text-center text-white">{getToolTitle()}</h2>
+      </div>
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold flex items-center gap-2">
           <Wand2 className="w-5 h-5 text-primary" />
